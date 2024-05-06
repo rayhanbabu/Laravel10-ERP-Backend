@@ -93,7 +93,15 @@
 
 
 
+  function member_category(){      
+       $data=Week::where('category_name','Member')->orderby('serial','asc')->get();
+       return $data;
+   }
 
+  function event_category(){      
+       $data=Week::where('category_name','Event')->orderby('serial','asc')->get();
+       return $data;
+   }
 
 
 function week_details($week_id){      

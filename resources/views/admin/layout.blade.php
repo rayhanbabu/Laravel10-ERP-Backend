@@ -96,30 +96,52 @@
           </nav>
   </div>
 
-        <a class="nav-link @yield('teacher')" href="{{url('/admin/teacher_view')}}">
+
+  <a class="nav-link @yield('sleeve')  
+       collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
+         <div class="sb-nav-link-icon "><i class="fas fa-columns"></i></div>
+              Members
+         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+     </a>
+
+  <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+          <nav class="sb-sidenav-menu-nested nav">
+          @foreach(member_category() as $row)                   
+                 <a class="nav-link @yield('Executive_select')" href="{{url('/admin/member_view/'.$row->id)}}">{{$row->week}} </a>                  
+               @endforeach
+          </nav>
+  </div>
+
+
+
+ 
+        <!-- <a class="nav-link @yield('teacher')" href="{{url('/admin/teacher_view')}}">
           <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
              Member 
-        </a>
+        </a> -->
 
-        <a class="nav-link @yield('client')" href="{{url('/admin/client_view')}}">
-           <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-               Client 
-        </a>
-
-        <a class="nav-link @yield('paymentview_select')" href="{{url('/admin/paymentview')}}">
-            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                Payment View 
-        </a>
-
-
+    
        @else
        @endif
 
 
-       <a class="nav-link @yield('notice_select')" href="{{url('admin/notice')}}">
-        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-           News & Event 
+       <a class="nav-link @yield('notice_select')  
+       collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayoutstwo" aria-expanded="false" aria-controls="collapseLayouts">
+         <div class="sb-nav-link-icon "><i class="fas fa-columns"></i></div>
+            News & Events
+         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
      </a>
+
+  <div class="collapse" id="collapseLayoutstwo" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+           <nav class="sb-sidenav-menu-nested nav">
+                @foreach(event_category() as $row)                   
+                 <a class="nav-link @yield('Executive_select')" href="{{url('/admin/notice/'.$row->id)}}">{{$row->week}} </a>                  
+               @endforeach
+           </nav>
+  </div>
+
+
+     
 
 
     

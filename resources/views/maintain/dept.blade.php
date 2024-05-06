@@ -245,8 +245,42 @@
 
 
              <div class="col-lg-6 my-2">
-             <label class="">Admin Status <span style="color:red;"> * </span></label>
+             <label class="">Teacher Status <span style="color:red;"> * </span></label>
                 <select class="form-control mb-2" id="edit_teacher_status" name="teacher_status" aria-label="Default select example" required>
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                </select>
+              </div>
+
+           <div class="col-lg-6 my-1">   
+              <label class="">Payment Status <span style="color:red;"> * </span></label>
+                <select class="form-control mb-2" id="edit_payment" name="payment" aria-label="Default select example" required>
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                </select>
+              </div>
+
+
+              <div class="col-lg-6 my-1">   
+              <label class="">Member Status <span style="color:red;"> * </span></label>
+                <select class="form-control mb-2" id="edit_member" name="member" aria-label="Default select example" required>
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                </select>
+              </div>
+
+
+              <div class="col-lg-6 my-1">   
+              <label class="">Event Status <span style="color:red;"> * </span></label>
+                <select class="form-control mb-2" id="edit_event" name="event" aria-label="Default select example" required>
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                </select>
+              </div>
+
+             <div class="col-lg-6 my-1">   
+              <label class="">teacher Status <span style="color:red;"> * </span></label>
+                <select class="form-control mb-2" id="edit_teacher" name="teacher" aria-label="Default select example" required>
                     <option value="1">Active</option>
                     <option value="0">Inactive</option>
                 </select>
@@ -382,6 +416,10 @@
               $("#edit_dept_address").val(response.data.dept_address);
               $("#edit_dept_code").val(response.data.dept_code);
               $("#edit_faculty").val(response.data.faculty); 
+              $("#edit_member").val(response.data.member); 
+              $("#edit_teacher").val(response.data.teacher); 
+              $("#edit_event").val(response.data.event); 
+              $("#edit_payment").val(response.data.payment); 
               $("#edit_established_date").val(response.data.established_date); 
             
               

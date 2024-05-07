@@ -19,11 +19,11 @@ class TeacherController extends Controller
     
     public function login(Request $request)
     {
-        try {
+        //try {
             return view('admin.login');
-        } catch (Exception $e) {
-            return  view('errors.error', ['error' => $e]);
-        }
+        // } catch (Exception $e) {
+        //     return  view('errors.error', ['error' => $e]);
+        // }
     }
 
     public function dashboard(Request $request)

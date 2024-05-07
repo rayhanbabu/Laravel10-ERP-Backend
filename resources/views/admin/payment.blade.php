@@ -1,17 +1,17 @@
 @extends('admin.layout')
 @section('page_title','Admin Panel')
-@section('teacher','active')
+@section('payment','active')
 @section('content')
 
-  <div class="card mt-3 mb-0"> 
+<div class="card mt-3 mb-0"> 
    <div class="card-header ">
-    <div class="row">
-                 <div class="col-sm-3 my-2"> <h5 class="mt-0"> Manager View </h5></div>
-                   <div class="col-sm-3 my-2">
-                      <div class="d-grid gap-2 d-flex justify-content-end"> 
-                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Add</button>  
-                      </div>    
-                   </div>
+      <div class="row">
+                 <div class="col-sm-3 my-2"> <h5 class="mt-0">payment View </h5></div>
+                  <div class="col-sm-3 my-2">
+                     <div class="d-grid gap-2 d-flex justify-content-end"> 
+                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Add</button>  
+                     </div>    
+                  </div>
 
                 <div class="col-sm-6 my-2 ">
                     <div class="d-grid gap-3 d-flex justify-content-end">
@@ -27,13 +27,13 @@
                  <div  class="alert alert-danger"> {{Session::get('fail')}}</div>
                   @endif
     </div>             
-   
-  </div>
-      
 
+    </div>
+      
   <div class="card-body">
+
     <div class="row">
-        <div class="col-md-3 p-2">
+        <div class="col-md-3">
               <select class="form-select form-select-sm" id="range" name="range" aria-label="Default select example " required>
                     <option  value="10">10 </option>
                     <option  value="20">20 </option>
@@ -50,6 +50,8 @@
     </div>
    </div>
    <div id="success_message"></div>
+
+
 				
 <div class="table-responsive">		
 <div class="x_content">
@@ -57,20 +59,18 @@
     <thead>
        <tr>
           <th  width="10%"> Image</th>
-          <th width="25%" class="sorting" data-sorting_type="asc" data-column_name="teacher_name" style="cursor: pointer">Member Name 
-                <span id="teacher_name_icon" ><i class="fas fa-sort-amount-up-alt"></i></span> </th>
-          <th  width="20%"> Nickname</th>
-          <th  width="25%"> Designation </th>
-          <th  width="10%"> Phone</th>
-          <th  width="10%"> Email</th>
-          <th  width="10%"> Password</th>
-          <th  width="10%"> </th>
+          <th width="10%" class="sorting" data-sorting_type="asc" data-column_name="date" style="cursor: pointer"> Date 
+                <span id="date_icon" ><i class="fas fa-sort-amount-up-alt"></i></span> </th>
+          <th  width="10%"> Manager </th>
+          <th  width="10%"> Site </th>
+          <th  width="10%"> payment Category </th>
+          <th  width="10%">Amount </th>
+          <th  width="10%">Reff </th>
 		      <th  width="10%"> </th>
           <th  width="10%"> </th>
-          <th  width="10%"> Present address </th>
-          <th  width="10%"> Permanent address </th>
-		      <th  width="10%"> Bank details </th>
-          <th  width="10%"> Login Code </th>
+          <th  width="10%">Created at </th>
+          <th  width="10%">Updated at </th>
+         
        
       </tr>
 
@@ -113,69 +113,65 @@
         <div class="modal-body p-4 bg-light">
           <div class="row">
 
+
+          <div class="col-lg-12 my-1">
+               <label for="roll">Date<span style="color:red;"> * </span></label>
+               <input type="date" name="date" id="date" class="form-control" placeholder="" required>
+               <p class="text-danger error_date"></p>
+            </div>
+ 
             <div class="col-lg-12 my-2">
-               <label for="roll">Member Name<span style="color:red;"> * </span></label>
-               <input type="text" name="teacher_name" id="teacher_name" class="form-control" placeholder="" required>
-               <p class="text-danger error_teacher_name"></p>
+                 <label for="roll">Received Name<span style="color:red;"> * </span></label>
+              <select class="form-select" id="received_by" name="received_by" aria-label="Default select example " required>
+                       <option  value="">Select One </option>
+                       @foreach($member as $row)
+                            <option   value="{{$row->id}}">{{$row->teacher_name}}</option>
+                        @endforeach  
+               </select>
+           </div>
+
+           <div class="col-lg-12 my-2">
+                 <label for="roll">Site Name<span style="color:red;"> * </span></label>
+              <select class="form-select" id="site_id" name="site_id" aria-label="Default select example " required>
+                       <option  value="">Select One </option>
+                       @foreach($site as $row)
+                            <option   value="{{$row->id}}">{{$row->site_name}}</option>
+                        @endforeach  
+               </select>
+           </div>
+
+
+           <div class="col-lg-12 my-2">
+                 <label for="roll">payment Category<span style="color:red;"> * </span></label>
+              <select class="form-select" id="pcategory_id" name="pcategory_id" aria-label="Default select example " required>
+                       <option  value="">Select One </option>
+                       @foreach($pcategory as $row)
+                            <option   value="{{$row->id}}">{{$row->pcategory_name}}</option>
+                        @endforeach  
+               </select>
+           </div>
+
+
+            <div class="col-lg-12 my-1">
+               <label for="roll">Amount<span style="color:red;"> * </span></label>
+               <input type="number" name="amount" id="amount" class="form-control" placeholder="" required>
+               <p class="text-danger error_amount"></p>
             </div>
 
-            <div class="col-lg-12 my-2">
-                <label for="roll">Designation <span style="color:red;"> * </span></label>
-                <input type="text" name="designation" id="designation" class="form-control" placeholder="" required>
-                <p class="text-danger error_designation"></p>
+            <div class="col-lg-12 my-1">
+               <label for="roll">Reff</label>
+               <input type="text" name="reff" id="reff" class="form-control" placeholder="" >
+               <p class="text-danger error_amount"></p>
             </div>
 
+          
             <div class="col-lg-12 my-2">
-                <label for="roll">Email <span style="color:red;"> * </span></label>
-                <input type="text" name="email" id="email" class="form-control" placeholder="" required>
-                <p class="text-danger error_email"></p>
-            </div>
-
-
-            <div class="col-lg-12 my-2">
-                 <label for="roll">Phone <span style="color:red;"> * </span></label>
-                 <input type="text" name="phone" id="phone" class="form-control" placeholder="" required>
-                 <p class="text-danger error_phone"></p>
-            </div>
-
-            <div class="col-lg-12 my-2">
-                 <label for="roll">Password <span style="color:red;"> * </span></label>
-                 <input type="text" name="password" id="password" class="form-control" placeholder="" required>
-                 <p class="text-danger error_password"></p>
-              </div>
-
-
-            <div class="col-lg-12 my-2">
-                <label for="roll">Nickname </label>
-                <input type="text" name="nickname" id="nickname" class="form-control" placeholder="" >
-                <p class="text-danger error_nickname"></p>
-            </div>
-
-            <div class="col-lg-12 my-2">
-                <label for="roll">Present address </label>
-                <input type="text" name="present_address" id="present_address" class="form-control" placeholder="" >
-                <p class="text-danger error_present_address"></p>
-            </div>
-
-            <div class="col-lg-12 my-2">
-                <label for="roll">Permanent address </label>
-                <input type="text" name="permanent_address" id="permanent_address" class="form-control" placeholder="" >
-                <p class="text-danger error_permanent_address"></p>
-            </div>
-
-            <div class="col-lg-12 my-2">
-                <label for="roll">Bank details </label>
-                <input type="text" name="bank_details" id="bank_details" class="form-control" placeholder="" >
-                <p class="text-danger error_bank_details"></p>
-            </div>
-
-
-            <div class="col-lg-12 my-2">
-                <label for="roll"> Image (Max:300*300px)</label>
+                <label for="roll"> Image (Max:400KB)</label>
                 <input type="file" name="image" id="image" class="form-control" placeholder="" >
                 <p class="text-danger error_building_image"></p>
             </div>
 
+          
         
 
             <ul class="alert alert-warning d-none" id="add_errorlist"></ul>
@@ -221,60 +217,54 @@
           <input type="hidden" name="edit_id" id="edit_id">
 
 
+          <div class="col-lg-12 my-1">
+               <label for="roll">Date<span style="color:red;"> * </span></label>
+               <input type="date" name="date" id="edit_date" class="form-control" placeholder="" required>
+               <p class="text-danger error_date"></p>
+            </div>
+
+            <div class="col-lg-12 my-2">
+                 <label for="roll">Received Name<span style="color:red;"> * </span></label>
+              <select class="form-select" id="edit_received_by" name="received_by" aria-label="Default select example " required>
+                       <option  value="">Select One </option>
+                       @foreach($member as $row)
+                            <option   value="{{$row->id}}">{{$row->teacher_name}}</option>
+                        @endforeach  
+               </select>
+           </div>
+
           <div class="col-lg-12 my-2">
-               <label for="roll"> Member Name<span style="color:red;"> * </span></label>
-               <input type="text" name="teacher_name" id="edit_teacher_name" class="form-control" placeholder="" required>
-               <p class="text-danger error_teacher_name"></p>
+                 <label for="roll">Site Name<span style="color:red;"> * </span></label>
+              <select class="form-select" id="edit_site_id" name="site_id" aria-label="Default select example " required>
+                       <option  value="">Select One </option>
+                       @foreach($site as $row)
+                            <option   value="{{$row->id}}">{{$row->site_name}}</option>
+                        @endforeach  
+               </select>
+           </div>
+
+
+           <div class="col-lg-12 my-2">
+              <label for="roll">payment Category<span style="color:red;"> * </span></label>
+                 <select class="form-select" id="edit_pcategory_id" name="pcategory_id" aria-label="Default select example " required>
+                       <option  value="">Select One </option>
+                       @foreach($pcategory as $row)
+                            <option   value="{{$row->id}}">{{$row->pcategory_name}}</option>
+                        @endforeach  
+                 </select>
+           </div>
+
+
+            <div class="col-lg-12 my-1">
+                <label for="roll">Amount<span style="color:red;"> * </span></label>
+                <input type="number" name="amount" id="edit_amount" class="form-control" placeholder="" required>
+                <p class="text-danger error_amount"></p>
             </div>
 
-            <div class="col-lg-12 my-2">
-                <label for="roll">Designation <span style="color:red;"> * </span></label>
-                <input type="text" name="designation" id="edit_designation" class="form-control" placeholder="" required>
-                <p class="text-danger error_designation"></p>
-            </div>
-
-            <div class="col-lg-12 my-2">
-                <label for="roll">Email <span style="color:red;"> * </span></label>
-                <input type="text" name="email" id="edit_email" class="form-control" placeholder="" required>
-                <p class="text-danger error_email"></p>
-            </div>
-
-
-            <div class="col-lg-12 my-2">
-                 <label for="roll">Phone <span style="color:red;"> * </span></label>
-                 <input type="text" name="phone" id="edit_phone" class="form-control" placeholder="" required>
-                 <p class="text-danger error_phone"></p>
-            </div>
-
-            <div class="col-lg-12 my-2">
-                 <label for="roll">Password <span style="color:red;"> * </span></label>
-                 <input type="text" name="password" id="edit_password" class="form-control" placeholder="" required>
-                 <p class="text-danger error_password"></p>
-              </div>
-
-
-            <div class="col-lg-12 my-2">
-                <label for="roll">Nickname </label>
-                <input type="text" name="nickname" id="edit_nickname" class="form-control" placeholder="" >
-                <p class="text-danger error_nickname"></p>
-            </div>
-
-            <div class="col-lg-12 my-2">
-                <label for="roll">Present_address </label>
-                <input type="text" name="present_address" id="edit_present_address" class="form-control" placeholder="" >
-                <p class="text-danger error_present_address"></p>
-            </div>
-
-            <div class="col-lg-12 my-2">
-                <label for="roll">Permanent address </label>
-                <input type="text" name="permanent_address" id="edit_permanent_address" class="form-control" placeholder="" >
-                <p class="text-danger error_permanent_address"></p>
-            </div>
-
-            <div class="col-lg-12 my-2">
-                <label for="roll">Bank details </label>
-                <input type="text" name="bank_details" id="edit_bank_details" class="form-control" placeholder="" >
-                <p class="text-danger error_bank_details"></p>
+            <div class="col-lg-12 my-1">
+                <label for="roll">Reff</label>
+                 <input type="text" name="reff" id="edit_reff" class="form-control" placeholder="" >
+                <p class="text-danger error_amount"></p>
             </div>
 
 
@@ -285,13 +275,7 @@
             </div>
 
  
-            <div class="col-lg-6 my-2">
-                  <label class=""><b>Manager Status</b></label>
-                    <select class="form-select" name="teacher_status" id="edit_teacher_status" aria-label="Default select example">
-                       <option value="1">Active</option>
-                       <option value="0">Inactive</option>
-                   </select>
-            </div>
+           
 
             <ul class="alert alert-warning d-none" id="edit_form_errlist"></ul>
          
@@ -334,7 +318,7 @@
          function fetchAll(){
             $.ajax({
              type:'GET',
-             url:'/admin/teacher_fetch',
+             url:'/admin/payment_fetch',
              datType:'json',
              beforeSend : function()
                {
@@ -354,7 +338,7 @@
         const fd = new FormData(this);
         $.ajax({
           type:'POST',
-          url:'/admin/teacher_store',
+          url:'/admin/payment_store',
           data: fd,
           cache: false,
           contentType: false,
@@ -390,13 +374,9 @@
                     $('#add_errorlist').append('<li>'+err_values+'</li>');
                     });     
               }
-            
-            
           }
         });
-
-       
-      });
+     });
 
 
 
@@ -407,22 +387,18 @@
          var id = $(this).val(); 
         $.ajax({
           type:'GET',
-          url:'/admin/teacher_edit',
+          url:'/admin/payment_edit',
           data: {
             id: id,
           },
           success: function(response){
               //console.log(response);
-              $("#edit_teacher_name").val(response.data.teacher_name);
-              $("#edit_email").val(response.data.email );
-              $("#edit_phone").val(response.data.phone);
-              $("#edit_nickname").val(response.data.nickname);
-              $("#edit_designation").val(response.data.designation);
-              $("#edit_present_address").val(response.data.present_address);
-              $("#edit_permanent_address").val(response.data.permanent_address);
-              $("#edit_password").val(response.data.password);
-              $("#edit_bank_details").val(response.data.bank_details);
-              $("#edit_teacher_status").val(response.data.teacher_status);
+              $("#edit_site_id").val(response.data.site_id);
+              $("#edit_pcategory_id").val(response.data.pcategory_id);
+              $("#edit_received_by").val(response.data.received_by);
+              $("#edit_date").val(response.data.date);
+              $("#edit_amount").val(response.data.amount);
+              $("#edit_reff").val(response.data.reff);
               $("#edit_id").val(response.data.id);
           }
         });
@@ -439,7 +415,7 @@
 
         $.ajax({
           type:'POST',
-          url:'/admin/teacher_update',
+          url:'/admin/payment_update',
           data: fd,
           cache: false,
           contentType: false,
@@ -470,7 +446,6 @@
                         $('#edit_form_errlist').append('<li>' + err_values + '</li>');
                      });
               }
-          
             $('.loader').hide();
           }
          
@@ -496,7 +471,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url:'/admin/teacher_delete',
+              url:'/admin/payment_delete',
               method:'delete',
               data: {
                 id: id,
@@ -521,7 +496,7 @@
 
    function fetch_data(page, sort_type="", sort_by="", search="",range=""){
     $.ajax({
-      url:"/admin/teacher/fetch_data?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+search+"&range="+range,
+      url:"/admin/payment/fetch_data?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+search+"&range="+range,
      beforeSend : function()
                {
                $('.loader_page').show();

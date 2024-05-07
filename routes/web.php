@@ -11,6 +11,11 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CollorController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\SiteController;
+use App\Http\Controllers\PcategoryController;
+use App\Http\Controllers\ScategoryController;
+use App\Http\Controllers\SpendController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +29,8 @@ use App\Http\Controllers\MemberController;
 */
 
     Route::get('locale/{locale}',function($locale){
-         Session::put('locale',$locale);
-         return redirect()->back();
+          Session::put('locale',$locale);
+          return redirect()->back();
     });
 
 
@@ -55,7 +60,7 @@ use App\Http\Controllers\MemberController;
            Route::post('/maintain/dept_update',[DeptController::class,'dept_update']);
            Route::delete('/maintain/dept_delete',[DeptController::class,'dept_delete']);
       
-          Route::middleware('SupperAdminToken')->group(function(){
+           Route::middleware('SupperAdminToken')->group(function(){
      
            //maintain people add
            Route::get('maintain/maintainview',[MaintainController::class,'maintainview']);
@@ -131,7 +136,55 @@ use App\Http\Controllers\MemberController;
             Route::post('/admin/collor_update',[CollorController::class,'collor_update']);
             Route::delete('/admin/collor_delete',[CollorController::class,'collor_delete']);
 
-             //Members  create
+           
+          //Site  create
+         Route::get('/admin/site_view',[Sitecontroller::class,'site_view']);
+         Route::get('/admin/site_fetch',[Sitecontroller::class,'fetch']);
+         Route::get('/admin/site/fetch_data',[Sitecontroller::class,'fetch_data']);
+         Route::post('/admin/site_store',[Sitecontroller::class,'store']);
+         Route::get('/admin/site_edit',[Sitecontroller::class,'site_edit']);
+         Route::post('/admin/site_update',[Sitecontroller::class,'site_update']);
+         Route::delete('/admin/site_delete',[Sitecontroller::class,'site_delete']);
+         
+             //pcategory  create
+            Route::get('/admin/pcategory_view',[Pcategorycontroller::class,'pcategory_view']);
+            Route::get('/admin/pcategory_fetch',[Pcategorycontroller::class,'fetch']);
+            Route::get('/admin/pcategory/fetch_data',[Pcategorycontroller::class,'fetch_data']);
+            Route::post('/admin/pcategory_store',[Pcategorycontroller::class,'store']);
+            Route::get('/admin/pcategory_edit',[Pcategorycontroller::class,'pcategory_edit']);
+            Route::post('/admin/pcategory_update',[Pcategorycontroller::class,'pcategory_update']);
+            Route::delete('/admin/pcategory_delete',[Pcategorycontroller::class,'pcategory_delete']); 
+
+             //scategory  create
+             Route::get('/admin/scategory_view',[Scategorycontroller::class,'scategory_view']);
+             Route::get('/admin/scategory_fetch',[Scategorycontroller::class,'fetch']);
+             Route::get('/admin/scategory/fetch_data',[Scategorycontroller::class,'fetch_data']);
+             Route::post('/admin/scategory_store',[Scategorycontroller::class,'store']);
+             Route::get('/admin/scategory_edit',[Scategorycontroller::class,'scategory_edit']);
+             Route::post('/admin/scategory_update',[Scategorycontroller::class,'scategory_update']);
+             Route::delete('/admin/scategory_delete',[Scategorycontroller::class,'scategory_delete']);
+
+             //spend  create
+            Route::get('/admin/spend_view',[Spendcontroller::class,'spend_view']);
+            Route::get('/admin/spend_fetch',[Spendcontroller::class,'fetch']);
+            Route::get('/admin/spend/fetch_data',[Spendcontroller::class,'fetch_data']);
+            Route::post('/admin/spend_store',[Spendcontroller::class,'store']);
+            Route::get('/admin/spend_edit',[Spendcontroller::class,'spend_edit']);
+            Route::post('/admin/spend_update',[Spendcontroller::class,'spend_update']);
+            Route::delete('/admin/spend_delete',[Spendcontroller::class,'spend_delete']); 
+
+
+              //payment  create
+              Route::get('/admin/payment_view',[Paymentcontroller::class,'payment_view']);
+              Route::get('/admin/payment_fetch',[Paymentcontroller::class,'fetch']);
+              Route::get('/admin/payment/fetch_data',[Paymentcontroller::class,'fetch_data']);
+              Route::post('/admin/payment_store',[Paymentcontroller::class,'store']);
+              Route::get('/admin/payment_edit',[Paymentcontroller::class,'payment_edit']);
+              Route::post('/admin/payment_update',[Paymentcontroller::class,'payment_update']);
+              Route::delete('/admin/payment_delete',[Paymentcontroller::class,'payment_delete']); 
+  
+
+            //Members  create
              Route::get('/admin/member_view/{category}',[MemberController::class,'member_view']);
              Route::get('/admin/member_fetch/{category}',[MemberController::class,'fetch']);
              Route::get('/admin/member/fetch_data/{category}',[MemberController::class,'fetch_data']);

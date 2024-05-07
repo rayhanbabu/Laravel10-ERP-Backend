@@ -63,6 +63,16 @@
         }
 
 
+        function teacher_access(){
+            $token_teacher=Cookie::get('token_teacher');
+            $result=TeacherJWTToken::ReadToken($token_teacher);
+            $teacher_access = Teacher::where('dept_id',$result->dept_id)->where('role','admin')
+            ->select('teacher','member','payment','event')->first();
+            return $teacher_access;
+     }
+
+
+
         function adminaccess(){
             $dudance_teacher=Cookie::get('dudance_teacher');
             $result=TeacherJWTToken::ReadToken($dudance_teacher);

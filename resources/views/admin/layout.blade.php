@@ -93,6 +93,9 @@
   <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
           <nav class="sb-sidenav-menu-nested nav">
                <a class="nav-link @yield('collor')" href="{{url('/admin/collor_view')}}"> Contact View </a>
+               <a class="nav-link @yield('site')" href="{{url('/admin/site_view')}}"> Site View </a>
+               <a class="nav-link @yield('pcategory')" href="{{url('/admin/pcategory_view')}}"> Payment category  </a>
+               <a class="nav-link @yield('scategory')" href="{{url('/admin/scategory_view')}}"> Spend category  </a>
           </nav>
   </div>
 
@@ -111,14 +114,27 @@
                @endforeach
           </nav>
   </div>
-
+ 
 
 
  
-        <!-- <a class="nav-link @yield('teacher')" href="{{url('/admin/teacher_view')}}">
+        <a class="nav-link @yield('teacher')" href="{{url('/admin/teacher_view')}}">
           <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-             Member 
-        </a> -->
+             Manger View 
+        </a>
+
+
+        <a class="nav-link @yield('spend')" href="{{url('/admin/spend_view')}}">
+          <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+             Spend View 
+        </a>
+
+
+        <a class="nav-link @yield('payment')" href="{{url('/admin/payment_view')}}">
+          <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+             Payment View 
+        </a>
+
 
     
        @else

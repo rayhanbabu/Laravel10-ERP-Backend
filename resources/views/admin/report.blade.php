@@ -1,12 +1,12 @@
 @extends('admin.layout')
 @section('page_title','Admin Panel')
-@section('payment','active')
+@section('report','active')
 @section('content')
 
 <div class="card mt-3 mb-0"> 
    <div class="card-header ">
       <div class="row">
-                 <div class="col-sm-3 my-2"> <h5 class="mt-0">payment View </h5></div>
+                 <div class="col-sm-3 my-2"> <h5 class="mt-0">Report View </h5></div>
                   <div class="col-sm-3 my-2">
                      <div class="d-grid gap-2 d-flex justify-content-end"> 
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Add</button>  
@@ -59,16 +59,13 @@
     <thead>
        <tr>
           <th  width="10%"> Image</th>
-          <th width="10%" class="sorting" data-sorting_type="asc" data-column_name="date" style="cursor: pointer"> Date 
-                <span id="date_icon" ><i class="fas fa-sort-amount-up-alt"></i></span> </th>
-          <th  width="10%"> Site </th>
-          <th  width="10%"> payment Category </th>
-          <th  width="10%">Amount </th>
-          <th  width="10%">Reff </th>
+          <th  width="20%"> Date</th>
+          <th width="25%" class="sorting" data-sorting_type="asc" data-column_name="title" style="cursor: pointer"> Title 
+                <span id="title_icon" ><i class="fas fa-sort-amount-up-alt"></i></span> </th>
+        
+          <th  width="20%"> Description</th>
 		      <th  width="10%"> </th>
           <th  width="10%"> </th>
-          <th  width="10%">Created at </th>
-          <th  width="10%">Updated at </th>
          
        
       </tr>
@@ -112,56 +109,32 @@
         <div class="modal-body p-4 bg-light">
           <div class="row">
 
-
-          <div class="col-lg-12 my-1">
+          <div class="col-lg-12 my-2">
                <label for="roll">Date<span style="color:red;"> * </span></label>
                <input type="date" name="date" id="date" class="form-control" placeholder="" required>
                <p class="text-danger error_date"></p>
             </div>
- 
-         
-           <div class="col-lg-12 my-2">
-                 <label for="roll">Site Name<span style="color:red;"> * </span></label>
-              <select class="form-select" id="site_id" name="site_id" aria-label="Default select example " required>
-                       <option  value="">Select One </option>
-                       @foreach($site as $row)
-                            <option   value="{{$row->id}}">{{$row->site_name}}</option>
-                        @endforeach  
-               </select>
-           </div>
 
-
-           <div class="col-lg-12 my-2">
-                 <label for="roll">payment Category<span style="color:red;"> * </span></label>
-              <select class="form-select" id="pcategory_id" name="pcategory_id" aria-label="Default select example " required>
-                       <option  value="">Select One </option>
-                       @foreach($pcategory as $row)
-                            <option   value="{{$row->id}}">{{$row->pcategory_name}}</option>
-                        @endforeach  
-               </select>
-           </div>
-
-
-            <div class="col-lg-12 my-1">
-               <label for="roll">Amount<span style="color:red;"> * </span></label>
-               <input type="number" name="amount" id="amount" class="form-control" placeholder="" required>
-               <p class="text-danger error_amount"></p>
-            </div>
-
-            <div class="col-lg-12 my-1">
-               <label for="roll">Reff</label>
-               <input type="text" name="reff" id="reff" class="form-control" placeholder="" >
-               <p class="text-danger error_amount"></p>
-            </div>
-
-          
             <div class="col-lg-12 my-2">
-                <label for="roll"> Image (Max:400KB)</label>
+               <label for="roll">Title<span style="color:red;"> * </span></label>
+               <input type="text" name="title" id="title" class="form-control" placeholder="" required>
+               <p class="text-danger error_title"></p>
+            </div>
+
+            <div class="col-lg-12 my-2">
+                <label for="roll">Description  </span></label>
+                <input type="text" name="description" id="description" class="form-control" placeholder="" >
+                <p class="text-danger error_designation"></p>
+            </div>
+
+           
+
+            <div class="col-lg-12 my-2">
+                <label for="roll"> Image (Max:300*300px)</label>
                 <input type="file" name="image" id="image" class="form-control" placeholder="" >
                 <p class="text-danger error_building_image"></p>
             </div>
 
-          
         
 
             <ul class="alert alert-warning d-none" id="add_errorlist"></ul>
@@ -206,58 +179,23 @@
           <div class="row">
           <input type="hidden" name="edit_id" id="edit_id">
 
-
-          <div class="col-lg-12 my-1">
+          <div class="col-lg-12 my-2">
                <label for="roll">Date<span style="color:red;"> * </span></label>
                <input type="date" name="date" id="edit_date" class="form-control" placeholder="" required>
                <p class="text-danger error_date"></p>
             </div>
 
-           
-
           <div class="col-lg-12 my-2">
-                 <label for="roll">Site Name<span style="color:red;"> * </span></label>
-              <select class="form-select" id="edit_site_id" name="site_id" aria-label="Default select example " required>
-                       <option  value="">Select One </option>
-                       @foreach($site as $row)
-                            <option   value="{{$row->id}}">{{$row->site_name}}</option>
-                        @endforeach  
-               </select>
-           </div>
-
-
-           <div class="col-lg-12 my-2">
-              <label for="roll">payment Category<span style="color:red;"> * </span></label>
-                 <select class="form-select" id="edit_pcategory_id" name="pcategory_id" aria-label="Default select example " required>
-                       <option  value="">Select One </option>
-                       @foreach($pcategory as $row)
-                            <option   value="{{$row->id}}">{{$row->pcategory_name}}</option>
-                        @endforeach  
-                 </select>
-           </div>
-
-
-            <div class="col-lg-12 my-1">
-                <label for="roll">Amount<span style="color:red;"> * </span></label>
-                <input type="number" name="amount" id="edit_amount" class="form-control" placeholder="" required>
-                <p class="text-danger error_amount"></p>
+               <label for="roll">Title<span style="color:red;"> * </span></label>
+               <input type="text" name="title" id="edit_title" class="form-control" placeholder="" required>
+               <p class="text-danger error_title"></p>
             </div>
-
-            <div class="col-lg-12 my-1">
-                <label for="roll">Reff</label>
-                 <input type="text" name="reff" id="edit_reff" class="form-control" placeholder="" >
-                <p class="text-danger error_amount"></p>
-            </div>
-
 
             <div class="col-lg-12 my-2">
-                <label for="roll"> Image (Max:300*300px)</label>
-                <input type="file" name="image" id="image" class="form-control" placeholder="" >
-                <p class="text-danger error_building_image"></p>
+                <label for="roll">Description  </span></label>
+                <input type="text" name="description" id="edit_description" class="form-control" placeholder="" >
+                <p class="text-danger error_designation"></p>
             </div>
-
- 
-           
 
             <ul class="alert alert-warning d-none" id="edit_form_errlist"></ul>
          
@@ -300,7 +238,7 @@
          function fetchAll(){
             $.ajax({
              type:'GET',
-             url:'/admin/payment_fetch',
+             url:'/admin/report_fetch',
              datType:'json',
              beforeSend : function()
                {
@@ -320,7 +258,7 @@
         const fd = new FormData(this);
         $.ajax({
           type:'POST',
-          url:'/admin/payment_store',
+          url:'/admin/report_store',
           data: fd,
           cache: false,
           contentType: false,
@@ -356,9 +294,13 @@
                     $('#add_errorlist').append('<li>'+err_values+'</li>');
                     });     
               }
+            
+            
           }
         });
-     });
+
+       
+      });
 
 
 
@@ -369,18 +311,15 @@
          var id = $(this).val(); 
         $.ajax({
           type:'GET',
-          url:'/admin/payment_edit',
+          url:'/admin/report_edit',
           data: {
             id: id,
           },
           success: function(response){
               //console.log(response);
-              $("#edit_site_id").val(response.data.site_id);
-              $("#edit_pcategory_id").val(response.data.pcategory_id);
-              $("#edit_received_by").val(response.data.received_by);
+              $("#edit_title").val(response.data.title);
+              $("#edit_description").val(response.data.description);
               $("#edit_date").val(response.data.date);
-              $("#edit_amount").val(response.data.amount);
-              $("#edit_reff").val(response.data.reff);
               $("#edit_id").val(response.data.id);
           }
         });
@@ -397,7 +336,7 @@
 
         $.ajax({
           type:'POST',
-          url:'/admin/payment_update',
+          url:'/admin/report_update',
           data: fd,
           cache: false,
           contentType: false,
@@ -453,7 +392,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url:'/admin/payment_delete',
+              url:'/admin/report_delete',
               method:'delete',
               data: {
                 id: id,
@@ -478,7 +417,7 @@
 
    function fetch_data(page, sort_type="", sort_by="", search="",range=""){
     $.ajax({
-      url:"/admin/payment/fetch_data?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+search+"&range="+range,
+      url:"/admin/report/fetch_data?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+search+"&range="+range,
      beforeSend : function()
                {
                $('.loader_page').show();
@@ -553,12 +492,6 @@ $(document).on('keyup', '#search', function(){
     var range = $('#range').val();
     fetch_data(page, sort_type, column_name, search,range);
   });
-
-
-	
-
-
-
 
 });
 

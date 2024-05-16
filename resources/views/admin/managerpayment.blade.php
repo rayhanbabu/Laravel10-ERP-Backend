@@ -1,12 +1,12 @@
 @extends('admin.layout')
 @section('page_title','Admin Panel')
-@section('payment','active')
+@section('managerpayment','active')
 @section('content')
 
 <div class="card mt-3 mb-0"> 
    <div class="card-header ">
       <div class="row">
-                 <div class="col-sm-3 my-2"> <h5 class="mt-0">payment View </h5></div>
+                 <div class="col-sm-3 my-2"> <h5 class="mt-0">  Manager Payment View  </h5></div>
                   <div class="col-sm-3 my-2">
                      <div class="d-grid gap-2 d-flex justify-content-end"> 
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Add</button>  
@@ -61,6 +61,7 @@
           <th  width="10%"> Image</th>
           <th width="10%" class="sorting" data-sorting_type="asc" data-column_name="date" style="cursor: pointer"> Date 
                 <span id="date_icon" ><i class="fas fa-sort-amount-up-alt"></i></span> </th>
+          <th  width="10%"> Manager </th>
           <th  width="10%"> Site </th>
           <th  width="10%"> payment Category </th>
           <th  width="10%">Amount </th>
@@ -119,7 +120,16 @@
                <p class="text-danger error_date"></p>
             </div>
  
-         
+            <div class="col-lg-12 my-2">
+                 <label for="roll">Manager Name<span style="color:red;"> * </span></label>
+              <select class="form-select" id="manager_id" name="manager_id" aria-label="Default select example " required>
+                       <option  value="">Select One </option>
+                       @foreach($member as $row)
+                            <option   value="{{$row->id}}">{{$row->teacher_name}}</option>
+                        @endforeach  
+               </select>
+           </div>
+
            <div class="col-lg-12 my-2">
                  <label for="roll">Site Name<span style="color:red;"> * </span></label>
               <select class="form-select" id="site_id" name="site_id" aria-label="Default select example " required>
@@ -213,7 +223,15 @@
                <p class="text-danger error_date"></p>
             </div>
 
-           
+            <div class="col-lg-12 my-2">
+                 <label for="roll">Manager Name<span style="color:red;"> * </span></label>
+              <select class="form-select" id="edit_manager_id" name="manager_id" aria-label="Default select example " required>
+                       <option  value="">Select One </option>
+                       @foreach($member as $row)
+                            <option   value="{{$row->id}}">{{$row->teacher_name}}</option>
+                        @endforeach  
+               </select>
+           </div>
 
           <div class="col-lg-12 my-2">
                  <label for="roll">Site Name<span style="color:red;"> * </span></label>
@@ -300,7 +318,7 @@
          function fetchAll(){
             $.ajax({
              type:'GET',
-             url:'/admin/payment_fetch',
+             url:'/admin/managerpayment_fetch',
              datType:'json',
              beforeSend : function()
                {
@@ -320,7 +338,7 @@
         const fd = new FormData(this);
         $.ajax({
           type:'POST',
-          url:'/admin/payment_store',
+          url:'/admin/managerpayment_store',
           data: fd,
           cache: false,
           contentType: false,
@@ -369,7 +387,7 @@
          var id = $(this).val(); 
         $.ajax({
           type:'GET',
-          url:'/admin/payment_edit',
+          url:'/admin/managerpayment_edit',
           data: {
             id: id,
           },
@@ -377,7 +395,7 @@
               //console.log(response);
               $("#edit_site_id").val(response.data.site_id);
               $("#edit_pcategory_id").val(response.data.pcategory_id);
-              $("#edit_received_by").val(response.data.received_by);
+              $("#edit_manager_id").val(response.data.manager_id);
               $("#edit_date").val(response.data.date);
               $("#edit_amount").val(response.data.amount);
               $("#edit_reff").val(response.data.reff);
@@ -397,7 +415,7 @@
 
         $.ajax({
           type:'POST',
-          url:'/admin/payment_update',
+          url:'/admin/managerpayment_update',
           data: fd,
           cache: false,
           contentType: false,
@@ -453,7 +471,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url:'/admin/payment_delete',
+              url:'/admin/managerpayment_delete',
               method:'delete',
               data: {
                 id: id,
@@ -478,7 +496,7 @@
 
    function fetch_data(page, sort_type="", sort_by="", search="",range=""){
     $.ajax({
-      url:"/admin/payment/fetch_data?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+search+"&range="+range,
+      url:"/admin/managerpayment/fetch_data?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+search+"&range="+range,
      beforeSend : function()
                {
                $('.loader_page').show();
@@ -541,25 +559,17 @@ $(document).on('keyup', '#search', function(){
           });
 
 
-
-
-   
-
   $(document).on('change', '#range', function(){
-    var search = $('#search').val();
-    var column_name = $('#hidden_column_name').val();
-    var sort_type = $('#hidden_sort_type').val();
-    var page = $('#hidden_page').val();
-    var range = $('#range').val();
-    fetch_data(page, sort_type, column_name, search,range);
+      var search = $('#search').val();
+      var column_name = $('#hidden_column_name').val();
+      var sort_type = $('#hidden_sort_type').val();
+      var page = $('#hidden_page').val();
+      var range = $('#range').val();
+     fetch_data(page, sort_type, column_name, search,range);
   });
 
 
 	
-
-
-
-
 });
 
 </script>

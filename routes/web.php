@@ -16,6 +16,8 @@ use App\Http\Controllers\PcategoryController;
 use App\Http\Controllers\ScategoryController;
 use App\Http\Controllers\SpendController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ManagerpaymentController;
+use App\Http\Controllers\ReportController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -61,13 +63,12 @@ use App\Http\Controllers\PaymentController;
            Route::delete('/maintain/dept_delete',[DeptController::class,'dept_delete']);
       
            Route::middleware('SupperAdminToken')->group(function(){
-     
-           //maintain people add
-           Route::get('maintain/maintainview',[MaintainController::class,'maintainview']);
-           Route::post('/maintain/store',[MaintainController::class,'store']);
-           Route::get('/maintain/fetchAll',[MaintainController::class,'fetchAll']);
-           Route::get('/maintain/edit',[MaintainController::class,'edit']);
-           Route::post('/maintain/update',[MaintainController::class,'update']);
+            //maintain people add
+            Route::get('maintain/maintainview',[MaintainController::class,'maintainview']);
+            Route::post('/maintain/store',[MaintainController::class,'store']);
+            Route::get('/maintain/fetchAll',[MaintainController::class,'fetchAll']);
+            Route::get('/maintain/edit',[MaintainController::class,'edit']);
+            Route::post('/maintain/update',[MaintainController::class,'update']);
 
 
                  //Universty route
@@ -136,7 +137,17 @@ use App\Http\Controllers\PaymentController;
             Route::post('/admin/collor_update',[CollorController::class,'collor_update']);
             Route::delete('/admin/collor_delete',[CollorController::class,'collor_delete']);
 
-           
+
+               // Report  create
+               Route::get('/admin/report_view',[ReportController::class,'report_view']);
+               Route::get('/admin/report_fetch',[ReportController::class,'fetch']);
+               Route::get('/admin/report/fetch_data',[ReportController::class,'fetch_data']);
+               Route::post('/admin/report_store',[ReportController::class,'store']);
+               Route::get('/admin/report_edit',[ReportController::class,'report_edit']);
+               Route::post('/admin/report_update',[ReportController::class,'report_update']);
+               Route::delete('/admin/report_delete',[ReportController::class,'report_delete']);
+   
+  
           //Site  create
          Route::get('/admin/site_view',[Sitecontroller::class,'site_view']);
          Route::get('/admin/site_fetch',[Sitecontroller::class,'fetch']);
@@ -193,6 +204,17 @@ use App\Http\Controllers\PaymentController;
              Route::post('/admin/member_update',[MemberController::class,'member_update']);
              Route::delete('/admin/member_delete',[MemberController::class,'member_delete']);
 
+         
+            //Manager payment create
+            Route::get('/admin/managerpayment_view',[Managerpaymentcontroller::class,'managerpayment_view']);
+            Route::get('/admin/managerpayment_fetch',[Managerpaymentcontroller::class,'fetch']);
+            Route::get('/admin/managerpayment/fetch_data',[Managerpaymentcontroller::class,'fetch_data']);
+            Route::post('/admin/managerpayment_store',[Managerpaymentcontroller::class,'store']);
+            Route::get('/admin/managerpayment_edit',[Managerpaymentcontroller::class,'managerpayment_edit']);
+            Route::post('/admin/managerpayment_update',[Managerpaymentcontroller::class,'managerpayment_update']);
+            Route::delete('/admin/managerpayment_delete',[Managerpaymentcontroller::class,'managerpayment_delete']); 
+
+
 
          // Notice 
          Route::get('/admin/notice/{category}',[NoticeController::class,'index']);
@@ -206,12 +228,8 @@ use App\Http\Controllers\PaymentController;
          Route::post('/admin/notice_update/{id}',[NoticeController::class,'update']);
          Route::get('/admin/notice_delete/{id}/{category}',[NoticeController::class,'destroy']);
 
+       });
 
-       
-          });
-
-          
-          
           // Reports pdf
           Route::get('/pdf/semester_routine', [PdfController::class,'semester_routine_pdf']);
 

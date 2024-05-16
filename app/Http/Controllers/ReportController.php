@@ -2,40 +2,29 @@
 
 namespace App\Http\Controllers;
 use Exception;
-use App\Models\Payment;
-use App\Models\Teacher;
-use App\Models\Site;
-use App\Models\Pcategory;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\validator;
 
-class PaymentController extends Controller
+class ReportController extends Controller
 {
    
-    public function payment_view(Request $request){
+    public function report_view(Request $request){
          try{  
-            $dept_id = $request->header('dept_id');
-            $teacher_id = $request->header('id');
-            $pcategory=Pcategory::where('dept_id',$dept_id)->where('pcategory_status',1)->orderby('id','asc')->get();
-            $site=Site::where('dept_id',$dept_id)->where('site_status',1)->orderby('id','asc')->get();
-            $member=Teacher::where('dept_id',$dept_id)->where('teacher_status',1)->orderby('id','asc')->get();
-            return view('admin.payment',['pcategory'=>$pcategory,'site'=>$site,'member'=>$member]);
+               return view('admin.report');
            }catch (Exception $e) { return  view('errors.error',['error'=>$e]);}
       }
  
       public function store(Request $request){
 
-        $dept_id = $request->header('dept_id');
-        $teacher_id = $request->header('id');
-        $validator=\Validator::make($request->all(),[    
-            'site_id'=>'required',
-            'pcategory_id'=>'required',
-            'amount'=>'required',
-            'date'=>'required',
-            'image'=>'image|mimes:jpeg,png,jpg|max:400',
-           ],
-         );
+       $dept_id = $request->header('dept_id');
+       $teacher_id = $request->header('id');
+       $validator=\Validator::make($request->all(),[    
+          'title'=>'required',
+          'image'=>'image|mimes:jpeg,png,jpg|max:400',
+        ],
+        );
  
       if($validator->fails()){
              return response()->json([
@@ -43,20 +32,13 @@ class PaymentController extends Controller
                'message'=>$validator->messages(),
             ]);
       }else{
-        $date=$request->input('date');
-        $day = date('d', strtotime($date)); 
-        $month = date('m', strtotime($date)); 
-        $year = date('Y', strtotime($date));
-             $model= new Payment;
+ 
+             $model= new Report;
              $model->dept_id=$dept_id;
-             $model->amount=$request->input('amount');
-             $model->date=$date;
-             $model->pcategory_id=$request->input('pcategory_id');
-             $model->site_id=$request->input('site_id');
+             $model->title=$request->input('title');
+             $model->description=$request->input('description');
              $model->reff=$request->input('reff');
-             $model->day=$day;
-             $model->month=$month;
-             $model->year=$year;
+             $model->date=$request->input('date');
              $model->created_by=$teacher_id;
              if ($request->hasfile('image')) {
                $imgfile = 'booking-';
@@ -87,9 +69,9 @@ class PaymentController extends Controller
          }
      }
  
-    public function payment_edit(Request $request) {
+    public function report_edit(Request $request) {
       $id = $request->id;
-      $data = Payment::find($id);
+      $data = Report::find($id);
       return response()->json([
           'status'=>200,  
           'data'=>$data,
@@ -97,14 +79,11 @@ class PaymentController extends Controller
     }
  
  
-    public function payment_update(Request $request ){
+    public function report_update(Request $request ){
 
         $validator=\Validator::make($request->all(),[    
-            'site_id'=>'required',
-            'pcategory_id'=>'required',
-            'amount'=>'required',
-            'date'=>'required',
-           'image'=>'image|mimes:jpeg,png,jpg|max:400',
+          'title'=>'required',
+          'image'=>'image|mimes:jpeg,png,jpg|max:400',
        ]);
  
       $teacher_id = $request->header('id');
@@ -114,21 +93,12 @@ class PaymentController extends Controller
             'message'=>$validator->messages(),
          ]);
     }else{
-        $date=$request->input('date');
-        $day = date('d', strtotime($date)); 
-        $month = date('m', strtotime($date)); 
-        $year = date('Y', strtotime($date));
-         $model=Payment::find($request->input('edit_id'));
+          $model=Report::find($request->input('edit_id'));
       if($model){
-        $model->amount=$request->input('amount');
-        $model->date=$date;
-        $model->pcategory_id=$request->input('pcategory_id');
-        $model->site_id=$request->input('site_id');
-        $model->reff=$request->input('reff');
-        $model->updated_by=$teacher_id;
-        $model->day=$day;
-        $model->month=$month;
-        $model->year=$year;
+         $model->title=$request->input('title');
+         $model->description=$request->input('description');
+         $model->updated_by=$teacher_id;
+         $model->date=$request->input('date');
          if ($request->hasfile('image')) {
             $imgfile = 'booking-';
             $size = $request->file('image')->getsize();
@@ -169,7 +139,7 @@ class PaymentController extends Controller
    }
  
  
-   public function payment_delete(Request $request) { 
+   public function report_delete(Request $request) { 
  
        // $hallinfo=Building::where('id',$request->input('id'))->count('id');
        //  if($hallinfo>0){
@@ -178,7 +148,7 @@ class PaymentController extends Controller
        //       'message'=>'Can not delete this record. This hall is used in hall info table.',
        //      ]);
        //   }else{
-           $model=Payment::find($request->input('id'));
+           $model=Report::find($request->input('id'));
            $filePath = public_path('uploads') . '/' . $model->image;
            if(File::exists($filePath)){
                  File::delete($filePath);
@@ -196,13 +166,8 @@ class PaymentController extends Controller
  
    public function fetch(Request $request){
        $dept_id = $request->header('dept_id');
-       $data=Payment::leftjoin('sites','sites.id', '=','payments.site_id')
-       ->leftjoin('pcategories','pcategories.id', '=','payments.pcategory_id')
-       ->leftjoin('teachers','teachers.id', '=','payments.created_by')
-       ->where('payments.dept_id',$dept_id)->select('sites.site_name','pcategories.pcategory_name'
-       ,'teachers.teacher_name','payments.*')
-       ->orderBy('id','desc')->paginate(10);
-       return view('admin.payment_data',compact('data'));
+       $data=Report::where('dept_id',$dept_id)->orderBy('id','desc')->paginate(10);
+       return view('admin.report_data',compact('data'));
     }
  
  
@@ -214,18 +179,16 @@ class PaymentController extends Controller
           $dept_id = $request->header('dept_id');
           $sort_by = $request->get('sortby');
           $sort_type = $request->get('sorttype'); 
-          $search = $request->get('search');
-          $search = str_replace("","%", $search);
-          $data =Payment::leftjoin('sites','sites.id', '=','payments.site_id')
-              ->leftjoin('pcategories','pcategories.id', '=','payments.pcategory_id')
-              ->leftjoin('teachers','teachers.id', '=','payments.created_by')
-              ->where('payments.dept_id',$dept_id)
+             $search = $request->get('search');
+             $search = str_replace("","%", $search);
+          $data = Report::where('dept_id',$dept_id)
               ->where(function($query) use ($search) {
-                  $query->where('date', 'like', '%'.$search.'%')
-                     ->orWhere('amount', 'like', '%'.$search.'%');
-               })->select('sites.site_name','pcategories.pcategory_name'
-               ,'teachers.teacher_name','payments.*')->paginate(10);
-                   return view('admin.payment_data', compact('data'))->render();
+                  $query->where('title', 'like', '%'.$search.'%')
+                     ->orWhere('description', 'like', '%'.$search.'%')
+                     ->orWhere('date', 'like', '%'.$search.'%')
+                     ->orWhere('reff', 'like', '%'.$search.'%');
+                })->paginate(10);
+            return view('admin.report_data', compact('data'))->render();
                   
        }
    }

@@ -114,26 +114,41 @@
                @endforeach
           </nav>
   </div>
+
+  <a class="nav-link @yield('payment')" href="{{url('/admin/payment_view')}}">
+          <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+             Payment 
+        </a>
  
-
-
  
         <a class="nav-link @yield('teacher')" href="{{url('/admin/teacher_view')}}">
           <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-             Manger View 
+             Manger info
+        </a>
+
+        <a class="nav-link @yield('managerpayment')" href="{{url('/admin/managerpayment_view')}}">
+          <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+            Manager Payment 
         </a>
 
 
         <a class="nav-link @yield('spend')" href="{{url('/admin/spend_view')}}">
           <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-             Spend View 
+             Spend Info 
         </a>
 
 
-        <a class="nav-link @yield('payment')" href="{{url('/admin/payment_view')}}">
+        <a class="nav-link @yield('report')" href="{{url('/admin/report_view')}}">
           <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-             Payment View 
+             Report Info 
         </a>
+
+
+
+       
+
+
+      
 
 
     

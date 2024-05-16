@@ -18,8 +18,8 @@
        }
 
        function admin_name($admin_id){
-           $admin=DB::table('admins')->where('id',$admin_id)->first();
-           return $admin->name;
+            $admin=DB::table('admins')->where('id',$admin_id)->first();
+            return $admin->name;
         }
 
 

@@ -86,6 +86,77 @@
             }
         }
 
+
+        function manager_access(){
+            $dudance_teacher=Cookie::get('dudance_teacher');
+            $result=TeacherJWTToken::ReadToken($dudance_teacher);
+            $hall=DB::table('teachers')->where('id',$result->id)->where('dept_id',$result->dept_id)->first();
+            return $hall;
+        }
+
+        function payment_view(){
+            if(manager_access()->role=='admin'){
+                return true;
+            } else if(manager_access()->payment_view=="Yes"){
+                 return true;
+            }else{
+                return false;
+            }
+        }
+
+        function payment_edit(){
+            if(manager_access()->role=='admin'){
+                return true;
+             }else if(manager_access()->payment_edit=="Yes"){
+                 return true;
+             }else{
+                return false;
+             }
+         }
+
+        function spend_view(){
+            if(manager_access()->role=='admin'){
+                 return true;
+            }else if(manager_access()->spend_view=="Yes"){
+                  return true;
+            }else{
+                 return false;
+            }
+        }
+
+        function spend_edit(){
+             if(manager_access()->role=='admin'){
+                 return true;
+             } else if(manager_access()->spend_edit=="Yes"){
+                 return true;
+             }else{
+                return false;
+             }
+         }
+
+
+         function pmanager_view(){
+            if(manager_access()->role=='admin'){
+                   return true;
+            } else if(manager_access()->pmanager_view=="Yes"){
+                  return true;
+             }else{
+                  return false;
+             }
+         }
+
+        function pmanager_edit(){
+             if(manager_access()->role=='admin'){
+                 return true;
+             }else if(manager_access()->pmanager_edit=="Yes"){
+                  return true;
+             }else{
+                 return false;
+             }
+         }
+
+
+
   function programe_category(){
           $dudance_teacher=Cookie::get('dudance_teacher');
           $result=TeacherJWTToken::ReadToken($dudance_teacher);

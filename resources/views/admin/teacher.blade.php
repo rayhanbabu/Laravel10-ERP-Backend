@@ -176,6 +176,9 @@
                 <p class="text-danger error_building_image"></p>
             </div>
 
+
+           
+
         
 
             <ul class="alert alert-warning d-none" id="add_errorlist"></ul>
@@ -285,13 +288,65 @@
             </div>
 
  
-            <div class="col-lg-6 my-2">
+            <div class="col-lg-12 my-2">
                   <label class=""><b>Manager Status</b></label>
                     <select class="form-select" name="teacher_status" id="edit_teacher_status" aria-label="Default select example">
                        <option value="1">Active</option>
                        <option value="0">Inactive</option>
                    </select>
             </div>
+
+            <div class="col-lg-6 my-2">
+                  <label class=""><b> Payment view Access</b></label>
+                   <select class="form-select" name="payment_view" id="edit_payment_view" aria-label="Default select example">
+                      <option value="No">No</option>
+                      <option value="Yes">Yes</option>
+                  </select>
+            </div>
+
+            <div class="col-lg-6 my-2">
+                  <label class=""><b> Payment Edit Access</b></label>
+                   <select class="form-select" name="payment_edit" id="edit_payment_edit" aria-label="Default select example">
+                      <option value="No">No</option>
+                      <option value="Yes">Yes</option>
+                  </select>
+            </div>
+
+
+            <div class="col-lg-6 my-2">
+                  <label class=""><b>Manager Payment view Access</b></label>
+                   <select class="form-select" name="pmanager_view" id="edit_pmanager_view" aria-label="Default select example">
+                      <option value="No">No</option>
+                      <option value="Yes">Yes</option>
+                  </select>
+            </div>
+
+            <div class="col-lg-6 my-2">
+                  <label class=""><b>Manager Payment Edit Access</b></label>
+                   <select class="form-select" name="pmanager_edit" id="edit_pmanager_edit" aria-label="Default select example">
+                      <option value="No">No</option>
+                      <option value="Yes">Yes</option>
+                  </select>
+            </div>
+
+            <div class="col-lg-6 my-2">
+                  <label class=""><b> Spend view Access</b></label>
+                   <select class="form-select" name="spend_view" id="edit_spend_view" aria-label="Default select example">
+                      <option value="No">No</option>
+                      <option value="Yes">Yes</option>
+                  </select>
+            </div>
+
+            <div class="col-lg-6 my-2">
+                  <label class=""><b> Spend Edit Access</b></label>
+                   <select class="form-select" name="spend_edit" id="edit_spend_edit" aria-label="Default select example">
+                      <option value="No">No</option>
+                      <option value="Yes">Yes</option>
+                  </select>
+            </div>
+
+
+
 
             <ul class="alert alert-warning d-none" id="edit_form_errlist"></ul>
          
@@ -423,6 +478,14 @@
               $("#edit_password").val(response.data.password);
               $("#edit_bank_details").val(response.data.bank_details);
               $("#edit_teacher_status").val(response.data.teacher_status);
+
+              $("#edit_payment_view").val(response.data.payment_view);
+              $("#edit_payment_edit").val(response.data.payment_edit);
+              $("#edit_pmanager_view").val(response.data.pmanager_view);
+              $("#edit_pmanager_edit").val(response.data.pmanager_edit);
+              $("#edit_spend_view").val(response.data.spend_view);
+              $("#edit_spend_edit").val(response.data.spend_edit);
+
               $("#edit_id").val(response.data.id);
           }
         });

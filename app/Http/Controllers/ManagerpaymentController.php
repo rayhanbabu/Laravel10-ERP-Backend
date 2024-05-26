@@ -218,12 +218,12 @@ class Managerpaymentcontroller extends Controller
               ->leftjoin('pcategories','pcategories.id', '=','managerpayments.pcategory_id')
               ->leftjoin('teachers','teachers.id', '=','managerpayments.manager_id')
               ->where('managerpayments.dept_id',$dept_id)
-              ->where(function($query) use ($search) {
+              ->where(function($query) use ($search){
                   $query->where('date', 'like', '%'.$search.'%')
                      ->orWhere('amount', 'like', '%'.$search.'%');
                })->select('sites.site_name','pcategories.pcategory_name'
                ,'teachers.teacher_name','managerpayments.*')->paginate(10);
-                   return view('admin.managerpayment_data', compact('data'))->render();
+              return view('admin.managerpayment_data', compact('data'))->render();
                   
        }
    }

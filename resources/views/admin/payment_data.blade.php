@@ -7,9 +7,10 @@
                 <td> {{ $row->amount }} </td>
                 <td> {{ $row->reff }} </td>
                 
-
+            @if(payment_edit())
                <td> <button type="button" value="{{ $row->id}}" class="btn btn-primary btn-sm editIcon" data-bs-toggle="modal" data-bs-target="#editEmployeeModal">Edit</button>  </td>
                <td> <button type="button" value="{{ $row->id}}" class="btn btn-danger btn-sm deleteIcon" >Delete</button>  </td>
+             @endif
                <td> {{ $row->created_at }} </td>
                <td> {{ $row->updated_at }} </td>
             </tr>            

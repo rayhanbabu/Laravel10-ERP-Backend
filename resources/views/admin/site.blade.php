@@ -62,6 +62,7 @@
           <th width="25%" class="sorting" data-sorting_type="asc" data-column_name="site_name" style="cursor: pointer"> Name 
                 <span id="site_name_icon" ><i class="fas fa-sort-amount-up-alt"></i></span> </th>
         
+          <th  width="10%"> Project Name</th>
           <th  width="10%"> </th>
 		      <th  width="10%"> </th>
           <th  width="10%"> </th>
@@ -114,7 +115,15 @@
                <p class="text-danger error_site_name"></p>
             </div>
 
-          
+            <div class="col-lg-12 my-2">
+                  <label for="roll">Project Name<span style="color:red;"> * </span></label>
+                  <select class="form-select" id="project_id" name="project_id" aria-label="Default select example " required>
+                           <option  value="">Select One </option>
+                           @foreach($project as $row)
+                            <option   value="{{$row->id}}">{{$row->project_name}}</option>
+                          @endforeach  
+                 </select>
+            </div>
            
 
             <div class="col-lg-12 my-2">
@@ -175,7 +184,16 @@
             </div>
 
 
-          
+            <div class="col-lg-12 my-2">
+                  <label for="roll">Project Name<span style="color:red;"> * </span></label>
+                  <select class="form-select" id="edit_project_id" name="project_id" aria-label="Default select example " required>
+                           <option  value="">Select One </option>
+                           @foreach($project as $row)
+                            <option   value="{{$row->id}}">{{$row->project_name}}</option>
+                          @endforeach  
+                 </select>
+            </div>
+
 
             <div class="col-lg-12 my-2">
                 <label for="roll"> Image (Max:300*300px)</label>
@@ -311,6 +329,7 @@
           success: function(response){
               //console.log(response);
               $("#edit_site_name").val(response.data.site_name);
+              $("#edit_project_id").val(response.data.project_id);
               $("#edit_site_status").val(response.data.site_status);
               $("#edit_id").val(response.data.id);
           }

@@ -17,7 +17,8 @@ use App\Http\Controllers\ScategoryController;
 use App\Http\Controllers\SpendController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ManagerpaymentController;
-use App\Http\Controllers\ReportController; 
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ProjectController;  
 
 /*
 |--------------------------------------------------------------------------
@@ -116,6 +117,9 @@ use App\Http\Controllers\ReportController;
           Route::post('admin/password',[TeacherController::class,'passwordupdate']); 
 
 
+
+
+
                    
          Route::middleware('AdminToken')->group(function(){
               //Teacher  create
@@ -128,7 +132,7 @@ use App\Http\Controllers\ReportController;
               Route::delete('/admin/teacher_delete',[TeacherController::class,'teacher_delete']);
 
 
-               //collors  create
+             //collors  create
             Route::get('/admin/collor_view',[CollorController::class,'collor_view']);
             Route::get('/admin/collor_fetch',[CollorController::class,'fetch']);
             Route::get('/admin/collor/fetch_data',[CollorController::class,'fetch_data']);
@@ -138,15 +142,14 @@ use App\Http\Controllers\ReportController;
             Route::delete('/admin/collor_delete',[CollorController::class,'collor_delete']);
 
 
-               // Report  create
-               Route::get('/admin/report_view',[ReportController::class,'report_view']);
-               Route::get('/admin/report_fetch',[ReportController::class,'fetch']);
-               Route::get('/admin/report/fetch_data',[ReportController::class,'fetch_data']);
-               Route::post('/admin/report_store',[ReportController::class,'store']);
-               Route::get('/admin/report_edit',[ReportController::class,'report_edit']);
-               Route::post('/admin/report_update',[ReportController::class,'report_update']);
-               Route::delete('/admin/report_delete',[ReportController::class,'report_delete']);
-   
+           //project  create
+         Route::get('/admin/project_view',[ProjectController::class,'project_view']);
+         Route::get('/admin/project_fetch',[ProjectController::class,'fetch']);
+         Route::get('/admin/project/fetch_data',[ProjectController::class,'fetch_data']);
+         Route::post('/admin/project_store',[ProjectController::class,'store']);
+         Route::get('/admin/project_edit',[ProjectController::class,'project_edit']);
+         Route::post('/admin/project_update',[ProjectController::class,'project_update']);
+         Route::delete('/admin/project_delete',[ProjectController::class,'project_delete']);
   
           //Site  create
          Route::get('/admin/site_view',[Sitecontroller::class,'site_view']);
@@ -175,26 +178,7 @@ use App\Http\Controllers\ReportController;
              Route::post('/admin/scategory_update',[Scategorycontroller::class,'scategory_update']);
              Route::delete('/admin/scategory_delete',[Scategorycontroller::class,'scategory_delete']);
 
-             //spend  create
-            Route::get('/admin/spend_view',[Spendcontroller::class,'spend_view']);
-            Route::get('/admin/spend_fetch',[Spendcontroller::class,'fetch']);
-            Route::get('/admin/spend/fetch_data',[Spendcontroller::class,'fetch_data']);
-            Route::post('/admin/spend_store',[Spendcontroller::class,'store']);
-            Route::get('/admin/spend_edit',[Spendcontroller::class,'spend_edit']);
-            Route::post('/admin/spend_update',[Spendcontroller::class,'spend_update']);
-            Route::delete('/admin/spend_delete',[Spendcontroller::class,'spend_delete']); 
-
-
-              //payment  create
-              Route::get('/admin/payment_view',[Paymentcontroller::class,'payment_view']);
-              Route::get('/admin/payment_fetch',[Paymentcontroller::class,'fetch']);
-              Route::get('/admin/payment/fetch_data',[Paymentcontroller::class,'fetch_data']);
-              Route::post('/admin/payment_store',[Paymentcontroller::class,'store']);
-              Route::get('/admin/payment_edit',[Paymentcontroller::class,'payment_edit']);
-              Route::post('/admin/payment_update',[Paymentcontroller::class,'payment_update']);
-              Route::delete('/admin/payment_delete',[Paymentcontroller::class,'payment_delete']); 
-  
-
+           
             //Members  create
              Route::get('/admin/member_view/{category}',[MemberController::class,'member_view']);
              Route::get('/admin/member_fetch/{category}',[MemberController::class,'fetch']);
@@ -205,17 +189,6 @@ use App\Http\Controllers\ReportController;
              Route::delete('/admin/member_delete',[MemberController::class,'member_delete']);
 
          
-            //Manager payment create
-            Route::get('/admin/managerpayment_view',[Managerpaymentcontroller::class,'managerpayment_view']);
-            Route::get('/admin/managerpayment_fetch',[Managerpaymentcontroller::class,'fetch']);
-            Route::get('/admin/managerpayment/fetch_data',[Managerpaymentcontroller::class,'fetch_data']);
-            Route::post('/admin/managerpayment_store',[Managerpaymentcontroller::class,'store']);
-            Route::get('/admin/managerpayment_edit',[Managerpaymentcontroller::class,'managerpayment_edit']);
-            Route::post('/admin/managerpayment_update',[Managerpaymentcontroller::class,'managerpayment_update']);
-            Route::delete('/admin/managerpayment_delete',[Managerpaymentcontroller::class,'managerpayment_delete']); 
-
-
-
          // Notice 
          Route::get('/admin/notice/{category}',[NoticeController::class,'index']);
          Route::get('/admin/notice_fetch/{category}',[NoticeController::class,'fetch']);
@@ -228,7 +201,79 @@ use App\Http\Controllers\ReportController;
          Route::post('/admin/notice_update/{id}',[NoticeController::class,'update']);
          Route::get('/admin/notice_delete/{id}/{category}',[NoticeController::class,'destroy']);
 
+
+        // Reports Summary
+        Route::get('/admin/report_summary',[PdfController::class,'report_summary']);
+        Route::post('/pdf/spend_summary',[PdfController::class,'spend_summary']);
+        Route::post('/pdf/manager_spend',[PdfController::class,'manager_spend']);
+        Route::post('/pdf/manager_payment',[PdfController::class,'manager_payment']);
+        Route::post('/pdf/site_payment',[PdfController::class,'site_payment']);
+
        });
+
+
+        Route::middleware('PaymentView')->group(function(){
+             //Payment View /Add
+              Route::get('/admin/payment_view',[Paymentcontroller::class,'payment_view']);
+              Route::get('/admin/payment_fetch',[Paymentcontroller::class,'fetch']);
+              Route::get('/admin/payment/fetch_data',[Paymentcontroller::class,'fetch_data']);
+              Route::post('/admin/payment_store',[Paymentcontroller::class,'store']);
+        });
+
+        Route::middleware('PaymentEdit')->group(function(){
+           //payment  Edit /Delete
+           Route::get('/admin/payment_edit',[Paymentcontroller::class,'payment_edit']);
+           Route::post('/admin/payment_update',[Paymentcontroller::class,'payment_update']);
+           Route::delete('/admin/payment_delete',[Paymentcontroller::class,'payment_delete']); 
+
+     });
+
+
+       Route::middleware('SpendView')->group(function(){
+              //spend  View / create
+              Route::get('/admin/spend_view',[Spendcontroller::class,'spend_view']);
+              Route::get('/admin/spend_fetch',[Spendcontroller::class,'fetch']);
+              Route::get('/admin/spend/fetch_data',[Spendcontroller::class,'fetch_data']);
+              Route::post('/admin/spend_store',[Spendcontroller::class,'store']);
+
+        });
+
+       Route::middleware('SpendEdit')->group(function(){
+          //spend edit / delete
+          Route::get('/admin/spend_edit',[Spendcontroller::class,'spend_edit']);
+          Route::post('/admin/spend_update',[Spendcontroller::class,'spend_update']);
+          Route::delete('/admin/spend_delete',[Spendcontroller::class,'spend_delete']); 
+       });
+
+
+        Route::middleware('PmanagerView')->group(function(){
+              // Manager payment View / create
+              Route::get('/admin/managerpayment_view',[Managerpaymentcontroller::class,'managerpayment_view']);
+              Route::get('/admin/managerpayment_fetch',[Managerpaymentcontroller::class,'fetch']);
+              Route::get('/admin/managerpayment/fetch_data',[Managerpaymentcontroller::class,'fetch_data']);
+              Route::post('/admin/managerpayment_store',[Managerpaymentcontroller::class,'store']);
+          });
+
+         Route::middleware('PmanagerEdit')->group(function(){
+              // Manager payment edit / delete
+              Route::get('/admin/managerpayment_edit',[Managerpaymentcontroller::class,'managerpayment_edit']);
+              Route::post('/admin/managerpayment_update',[Managerpaymentcontroller::class,'managerpayment_update']);
+              Route::delete('/admin/managerpayment_delete',[Managerpaymentcontroller::class,'managerpayment_delete']); 
+         });
+
+
+             // Report  create
+             Route::get('/admin/report_view',[ReportController::class,'report_view']);
+             Route::get('/admin/report_fetch',[ReportController::class,'fetch']);
+             Route::get('/admin/report/fetch_data',[ReportController::class,'fetch_data']);
+             Route::post('/admin/report_store',[ReportController::class,'store']);
+             Route::get('/admin/report_edit',[ReportController::class,'report_edit']);
+             Route::post('/admin/report_update',[ReportController::class,'report_update']);
+             Route::delete('/admin/report_delete',[ReportController::class,'report_delete']);
+
+
+
+
 
           // Reports pdf
           Route::get('/pdf/semester_routine', [PdfController::class,'semester_routine_pdf']);

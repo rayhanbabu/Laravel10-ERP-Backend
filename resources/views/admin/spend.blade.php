@@ -6,7 +6,7 @@
 <div class="card mt-3 mb-0"> 
    <div class="card-header ">
       <div class="row">
-                 <div class="col-sm-3 my-2"> <h5 class="mt-0">Spend View </h5></div>
+                 <div class="col-sm-3 my-2"> <h5 class="mt-0">Spend Info </h5></div>
                   <div class="col-sm-3 my-2">
                      <div class="d-grid gap-2 d-flex justify-content-end"> 
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Add</button>  
@@ -58,18 +58,20 @@
  <table id="employee_data"  class="table table-bordered table-hover table-sm shadow">
     <thead>
        <tr>
-          <th  width="10%"> Image</th>
-          <th width="10%" class="sorting" data-sorting_type="asc" data-column_name="date" style="cursor: pointer"> Date 
+           <th  width="10%"> Image</th>
+           <th width="10%" class="sorting" data-sorting_type="asc" data-column_name="date" style="cursor: pointer"> Date 
                 <span id="date_icon" ><i class="fas fa-sort-amount-up-alt"></i></span> </th>
-          <th  width="10%"> Manager </th>
-          <th  width="10%"> Site </th>
-          <th  width="10%"> Spend Category </th>
-          <th  width="10%">Amount </th>
-          <th  width="10%">Reff </th>
-		      <th  width="10%"> </th>
-          <th  width="10%"> </th>
-          <th  width="10%">Created at </th>
-          <th  width="10%">Updated at </th>
+           <th  width="10%"> Manager </th>
+           <th  width="10%"> Site </th>
+           <th  width="10%"> Spend Category </th>
+           <th  width="10%">Amount </th>
+           <th  width="10%">Reff </th>
+          @if(spend_edit())
+		       <th  width="10%"> </th>
+           <th  width="10%"> </th>
+          @endif
+           <th  width="10%">Created at </th>
+           <th  width="10%">Updated at </th>
          
        
       </tr>

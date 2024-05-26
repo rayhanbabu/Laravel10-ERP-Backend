@@ -1,12 +1,13 @@
 @extends('admin.layout')
 @section('page_title','Admin Panel')
-@section('payment','active')
+@section('project','active')
 @section('content')
+
 
 <div class="card mt-3 mb-0"> 
    <div class="card-header ">
       <div class="row">
-                 <div class="col-sm-3 my-2"> <h5 class="mt-0">Payment View </h5></div>
+                 <div class="col-sm-3 my-2"> <h5 class="mt-0">Project  </h5></div>
                   <div class="col-sm-3 my-2">
                      <div class="d-grid gap-2 d-flex justify-content-end"> 
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Add</button>  
@@ -58,19 +59,13 @@
  <table id="employee_data"  class="table table-bordered table-hover table-sm shadow">
     <thead>
        <tr>
-           <th  width="10%"> Image</th>
-           <th width="10%" class="sorting" data-sorting_type="asc" data-column_name="date" style="cursor: pointer"> Date 
-                <span id="date_icon" ><i class="fas fa-sort-amount-up-alt"></i></span> </th>
-           <th  width="10%"> Site </th>
-           <th  width="10%"> payment Category </th>
-           <th  width="10%">Amount </th>
-           <th  width="10%">Reff </th>
-         @if(payment_edit())
-		       <th  width="10%"> </th>
-           <th  width="10%"> </th>
-          @endif
-          <th  width="10%">Created at </th>
-          <th  width="10%">Updated at </th>
+          <th  width="10%"> Image</th>
+          <th width="25%" class="sorting" data-sorting_type="asc" data-column_name="project_name" style="cursor: pointer"> Name 
+                <span id="project_name_icon" ><i class="fas fa-sort-amount-up-alt"></i></span> </th>
+        
+          <th  width="10%"> </th>
+		      <th  width="10%"> </th>
+          <th  width="10%"> </th>
          
        
       </tr>
@@ -114,56 +109,19 @@
         <div class="modal-body p-4 bg-light">
           <div class="row">
 
-
-          <div class="col-lg-12 my-1">
-               <label for="roll">Date<span style="color:red;"> * </span></label>
-               <input type="date" name="date" id="date" class="form-control" placeholder="" required>
-               <p class="text-danger error_date"></p>
-            </div>
- 
-         
-           <div class="col-lg-12 my-2">
-                 <label for="roll">Site Name<span style="color:red;"> * </span></label>
-              <select class="form-select" id="site_id" name="site_id" aria-label="Default select example " required>
-                       <option  value="">Select One </option>
-                       @foreach($site as $row)
-                            <option   value="{{$row->id}}">{{$row->site_name}}</option>
-                        @endforeach  
-               </select>
-           </div>
-
-
-           <div class="col-lg-12 my-2">
-                 <label for="roll">payment Category<span style="color:red;"> * </span></label>
-              <select class="form-select" id="pcategory_id" name="pcategory_id" aria-label="Default select example " required>
-                       <option  value="">Select One </option>
-                       @foreach($pcategory as $row)
-                            <option   value="{{$row->id}}">{{$row->pcategory_name}}</option>
-                        @endforeach  
-               </select>
-           </div>
-
-
-            <div class="col-lg-12 my-1">
-               <label for="roll">Amount<span style="color:red;"> * </span></label>
-               <input type="number" name="amount" id="amount" class="form-control" placeholder="" required>
-               <p class="text-danger error_amount"></p>
-            </div>
-
-            <div class="col-lg-12 my-1">
-               <label for="roll">Reff</label>
-               <input type="text" name="reff" id="reff" class="form-control" placeholder="" >
-               <p class="text-danger error_amount"></p>
-            </div>
-
-          
             <div class="col-lg-12 my-2">
-                <label for="roll"> Image (Max:400KB)</label>
+               <label for="roll">Name<span style="color:red;"> * </span></label>
+               <input type="text" name="project_name" id="project_name" class="form-control" placeholder="" required>
+               <p class="text-danger error_project_name"></p>
+            </div>
+
+         
+            <div class="col-lg-12 my-2">
+                <label for="roll"> Image (Max:300*300px)</label>
                 <input type="file" name="image" id="image" class="form-control" placeholder="" >
                 <p class="text-danger error_building_image"></p>
             </div>
 
-          
         
 
             <ul class="alert alert-warning d-none" id="add_errorlist"></ul>
@@ -209,48 +167,14 @@
           <input type="hidden" name="edit_id" id="edit_id">
 
 
-          <div class="col-lg-12 my-1">
-               <label for="roll">Date<span style="color:red;"> * </span></label>
-               <input type="date" name="date" id="edit_date" class="form-control" placeholder="" required>
-               <p class="text-danger error_date"></p>
+             <div class="col-lg-12 my-2">
+                <label for="roll">Name<span style="color:red;"> * </span></label>
+                <input type="text" name="project_name" id="edit_project_name" class="form-control" placeholder="" required>
+                <p class="text-danger error_project_name"></p>
             </div>
 
-           
-
-          <div class="col-lg-12 my-2">
-                 <label for="roll">Site Name<span style="color:red;"> * </span></label>
-              <select class="form-select" id="edit_site_id" name="site_id" aria-label="Default select example " required>
-                       <option  value="">Select One </option>
-                       @foreach($site as $row)
-                            <option   value="{{$row->id}}">{{$row->site_name}}</option>
-                        @endforeach  
-               </select>
-           </div>
-
-
-           <div class="col-lg-12 my-2">
-              <label for="roll">payment Category<span style="color:red;"> * </span></label>
-                 <select class="form-select" id="edit_pcategory_id" name="pcategory_id" aria-label="Default select example " required>
-                       <option  value="">Select One </option>
-                       @foreach($pcategory as $row)
-                            <option   value="{{$row->id}}">{{$row->pcategory_name}}</option>
-                        @endforeach  
-                 </select>
-           </div>
-
-
-            <div class="col-lg-12 my-1">
-                <label for="roll">Amount<span style="color:red;"> * </span></label>
-                <input type="number" name="amount" id="edit_amount" class="form-control" placeholder="" required>
-                <p class="text-danger error_amount"></p>
-            </div>
-
-            <div class="col-lg-12 my-1">
-                <label for="roll">Reff</label>
-                 <input type="text" name="reff" id="edit_reff" class="form-control" placeholder="" >
-                <p class="text-danger error_amount"></p>
-            </div>
-
+             
+          
 
             <div class="col-lg-12 my-2">
                 <label for="roll"> Image (Max:300*300px)</label>
@@ -259,7 +183,13 @@
             </div>
 
  
-           
+            <div class="col-lg-6 my-2">
+                  <label class=""><b>project Status</b></label>
+                    <select class="form-select" name="project_status" id="edit_project_status" aria-label="Default select example">
+                       <option value="1">Active</option>
+                       <option value="0">Inactive</option>
+                   </select>
+            </div>
 
             <ul class="alert alert-warning d-none" id="edit_form_errlist"></ul>
          
@@ -302,7 +232,7 @@
          function fetchAll(){
             $.ajax({
              type:'GET',
-             url:'/admin/payment_fetch',
+             url:'/admin/project_fetch',
              datType:'json',
              beforeSend : function()
                {
@@ -322,7 +252,7 @@
         const fd = new FormData(this);
         $.ajax({
           type:'POST',
-          url:'/admin/payment_store',
+          url:'/admin/project_store',
           data: fd,
           cache: false,
           contentType: false,
@@ -358,6 +288,8 @@
                     $('#add_errorlist').append('<li>'+err_values+'</li>');
                     });     
               }
+            
+            
           }
         });
      });
@@ -371,18 +303,14 @@
          var id = $(this).val(); 
         $.ajax({
           type:'GET',
-          url:'/admin/payment_edit',
+          url:'/admin/project_edit',
           data: {
             id: id,
           },
           success: function(response){
               //console.log(response);
-              $("#edit_site_id").val(response.data.site_id);
-              $("#edit_pcategory_id").val(response.data.pcategory_id);
-              $("#edit_received_by").val(response.data.received_by);
-              $("#edit_date").val(response.data.date);
-              $("#edit_amount").val(response.data.amount);
-              $("#edit_reff").val(response.data.reff);
+              $("#edit_project_name").val(response.data.project_name);
+              $("#edit_project_status").val(response.data.project_status);
               $("#edit_id").val(response.data.id);
           }
         });
@@ -399,7 +327,7 @@
 
         $.ajax({
           type:'POST',
-          url:'/admin/payment_update',
+          url:'/admin/project_update',
           data: fd,
           cache: false,
           contentType: false,
@@ -455,7 +383,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url:'/admin/payment_delete',
+              url:'/admin/project_delete',
               method:'delete',
               data: {
                 id: id,
@@ -480,7 +408,7 @@
 
    function fetch_data(page, sort_type="", sort_by="", search="",range=""){
     $.ajax({
-      url:"/admin/payment/fetch_data?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+search+"&range="+range,
+      url:"/admin/project/fetch_data?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&search="+search+"&range="+range,
      beforeSend : function()
                {
                $('.loader_page').show();

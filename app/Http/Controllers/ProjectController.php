@@ -2,29 +2,26 @@
 
 namespace App\Http\Controllers;
 use Exception;
-use App\Models\Site;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\validator;
-use App\Models\Project;
 
-class SiteController extends Controller
+class ProjectController extends Controller
 {
    
-     public function site_view(Request $request){
-        try{  
-              $dept_id = $request->header('dept_id');
-              $project=Project::where('dept_id',$dept_id)->where('project_status',1)->orderby('id','asc')->get();
-              return view('admin.site',["project"=>$project]);
-          }catch (Exception $e) { return  view('errors.error',['error'=>$e]);}
-        }
+    public function project_view(Request $request){
+         try{  
+               return view('admin.project');
+           }catch (Exception $e) { return  view('errors.error',['error'=>$e]);}
+      }
  
       public function store(Request $request){
 
         $dept_id = $request->header('dept_id');
         $teacher_id = $request->header('id');
         $validator=\Validator::make($request->all(),[    
-            'site_name'=>'required',
+            'project_name'=>'required',
             'image'=>'image|mimes:jpeg,png,jpg|max:400',
            ],
          );
@@ -36,10 +33,9 @@ class SiteController extends Controller
             ]);
       }else{
  
-             $model= new Site;
+             $model= new Project;
              $model->dept_id=$dept_id;
-             $model->site_name=$request->input('site_name');
-             $model->project_id=$request->input('project_id');
+             $model->project_name=$request->input('project_name');
              $model->created_by=$teacher_id;
              if ($request->hasfile('image')) {
                $imgfile = 'booking-';
@@ -70,9 +66,9 @@ class SiteController extends Controller
          }
      }
  
-    public function site_edit(Request $request) {
+    public function project_edit(Request $request) {
       $id = $request->id;
-      $data = Site::find($id);
+      $data = Project::find($id);
       return response()->json([
           'status'=>200,  
           'data'=>$data,
@@ -80,11 +76,11 @@ class SiteController extends Controller
     }
  
  
-    public function site_update(Request $request ){
+    public function project_update(Request $request ){
 
         $validator=\Validator::make($request->all(),[    
-          'site_name'=>'required',
-          'site_name'=>'required|unique:sites,site_name,'.$request->input('edit_id'),
+          'project_name'=>'required',
+          'project_name'=>'required|unique:projects,project_name,'.$request->input('edit_id'),
           'image'=>'image|mimes:jpeg,png,jpg|max:400',
        ]);
  
@@ -95,11 +91,10 @@ class SiteController extends Controller
             'message'=>$validator->messages(),
          ]);
     }else{
-          $model=site::find($request->input('edit_id'));
+          $model=Project::find($request->input('edit_id'));
       if($model){
-         $model->site_name=$request->input('site_name');
-         $model->site_status=$request->input('site_status');
-         $model->project_id=$request->input('project_id');
+         $model->project_name=$request->input('project_name');
+         $model->project_status=$request->input('project_status');
          $model->updated_by=$teacher_id;
          if ($request->hasfile('image')) {
             $imgfile = 'booking-';
@@ -141,7 +136,7 @@ class SiteController extends Controller
    }
  
  
-   public function site_delete(Request $request) { 
+   public function project_delete(Request $request) { 
  
        // $hallinfo=Building::where('id',$request->input('id'))->count('id');
        //  if($hallinfo>0){
@@ -150,7 +145,7 @@ class SiteController extends Controller
        //       'message'=>'Can not delete this record. This hall is used in hall info table.',
        //      ]);
        //   }else{
-           $model=Site::find($request->input('id'));
+           $model=Project::find($request->input('id'));
            $filePath = public_path('uploads') . '/' . $model->image;
            if(File::exists($filePath)){
                  File::delete($filePath);
@@ -168,10 +163,8 @@ class SiteController extends Controller
  
    public function fetch(Request $request){
        $dept_id = $request->header('dept_id');
-       $data=Site::leftjoin('projects','projects.id', '=','sites.project_id')
-       ->where('sites.dept_id',$dept_id)->select('projects.project_name','sites.*')
-       ->orderBy('id','desc')->paginate(10);
-       return view('admin.site_data',compact('data'));
+       $data=Project::where('dept_id',$dept_id)->orderBy('id','desc')->paginate(10);
+       return view('admin.project_data',compact('data'));
     }
  
  
@@ -185,14 +178,12 @@ class SiteController extends Controller
           $sort_type = $request->get('sorttype'); 
              $search = $request->get('search');
              $search = str_replace("","%", $search);
-          $data = Site::leftjoin('projects','projects.id', '=','sites.project_id')
-            ->where('sites.dept_id',$dept_id)->select('projects.project_name','sites.*')
-              ->where(function($query) use ($search) {
-                  $query->where('site_name', 'like', '%'.$search.'%')
-                  ->orWhere('project_name', 'like', '%'.$search.'%')
-                  ->orWhere('site_status', 'like', '%'.$search.'%');
-               })->paginate(10);
-                return view('admin.site_data', compact('data'))->render();
+            $data = Project::where('dept_id',$dept_id)
+               ->where(function($query) use ($search) {
+                    $query->where('project_name', 'like', '%'.$search.'%')
+                      ->orWhere('project_status', 'like', '%'.$search.'%');
+                    })->paginate(10);
+                   return view('admin.project_data', compact('data'))->render();
                   
        }
    }

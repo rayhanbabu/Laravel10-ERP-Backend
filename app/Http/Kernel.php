@@ -55,6 +55,12 @@ class Kernel extends HttpKernel
      */
     
     protected $middlewareAliases = [
+        'PmanagerEdit' => \App\Http\Middleware\PmanagerEdit::class,
+        'PmanagerView' => \App\Http\Middleware\PmanagerView::class,
+        'SpendView' => \App\Http\Middleware\SpendView::class,
+        'SpendEdit' => \App\Http\Middleware\SpendEdit::class,
+        'PaymentEdit' => \App\Http\Middleware\PaymentEdit::class,
+        'PaymentView' => \App\Http\Middleware\PaymentView::class,
         'AdminToken' => \App\Http\Middleware\AdminToken::class,
         'TeacherTokenExist' => \App\Http\Middleware\TeacherTokenExist::class,
         'TeacherToken' => \App\Http\Middleware\TeacherToken::class,

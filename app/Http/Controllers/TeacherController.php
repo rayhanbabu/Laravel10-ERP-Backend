@@ -373,6 +373,14 @@ class TeacherController extends Controller
          $model->permanent_address=$request->input('permanent_address');
          $model->bank_details=$request->input('bank_details');
          $model->teacher_status=$request->input('teacher_status');
+
+         $model->payment_view=$request->input('payment_view');
+         $model->payment_edit=$request->input('payment_edit');
+         $model->pmanager_view=$request->input('pmanager_view');
+         $model->pmanager_edit=$request->input('pmanager_edit');
+         $model->spend_view=$request->input('spend_view');
+         $model->spend_edit=$request->input('spend_edit');
+
          $model->updated_by=$teacher_id;
 
         if ($request->hasfile('image')) {

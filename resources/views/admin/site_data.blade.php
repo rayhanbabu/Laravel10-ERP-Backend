@@ -2,6 +2,7 @@
            <tr>
                 <td> <img src="{{ asset('/uploads/'.$row->image) }}" width="100" class="img-thumbnail" alt="Image"></td>
                 <td> {{ $row->site_name }} </td>
+                <td> {{ $row->project_name }} </td>
                 <td>
                   @if($row->site_status == 1)
                    <a href="#" class="btn btn-success btn-sm">Active<a>

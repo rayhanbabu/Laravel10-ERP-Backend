@@ -66,8 +66,10 @@
           <th  width="10%"> payment Category </th>
           <th  width="10%">Amount </th>
           <th  width="10%">Reff </th>
-		      <th  width="10%"> </th>
-          <th  width="10%"> </th>
+           @if(pmanager_edit())
+		          <th  width="10%"> </th>
+              <th  width="10%"> </th>
+           @endif   
           <th  width="10%">Created at </th>
           <th  width="10%">Updated at </th>
          

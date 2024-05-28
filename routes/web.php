@@ -72,7 +72,7 @@ use App\Http\Controllers\ProjectController;
             Route::post('/maintain/update',[MaintainController::class,'update']);
 
 
-                 //Universty route
+            //Universty route
            Route::get('maintain/univer-view',[UniverController::class,'univer_view']);
            Route::post('/univer/store',[UniverController::class,'store']);
            Route::get('/univer/fetchAll',[UniverController::class,'fetchAll']);
@@ -202,12 +202,7 @@ use App\Http\Controllers\ProjectController;
          Route::get('/admin/notice_delete/{id}/{category}',[NoticeController::class,'destroy']);
 
 
-        // Reports Summary
-        Route::get('/admin/report_summary',[PdfController::class,'report_summary']);
-        Route::post('/pdf/spend_summary',[PdfController::class,'spend_summary']);
-        Route::post('/pdf/manager_spend',[PdfController::class,'manager_spend']);
-        Route::post('/pdf/manager_payment',[PdfController::class,'manager_payment']);
-        Route::post('/pdf/site_payment',[PdfController::class,'site_payment']);
+      
 
        });
 
@@ -218,6 +213,14 @@ use App\Http\Controllers\ProjectController;
               Route::get('/admin/payment_fetch',[Paymentcontroller::class,'fetch']);
               Route::get('/admin/payment/fetch_data',[Paymentcontroller::class,'fetch_data']);
               Route::post('/admin/payment_store',[Paymentcontroller::class,'store']);
+
+                // Reports Summary
+          Route::get('/admin/report_summary',[PdfController::class,'report_summary']);
+          Route::post('/pdf/spend_summary',[PdfController::class,'spend_summary']);
+          Route::post('/pdf/manager_spend',[PdfController::class,'manager_spend']);
+          Route::post('/pdf/manager_payment',[PdfController::class,'manager_payment']);
+          Route::post('/pdf/site_payment',[PdfController::class,'site_payment']);
+
         });
 
         Route::middleware('PaymentEdit')->group(function(){

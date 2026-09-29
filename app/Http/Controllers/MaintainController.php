@@ -51,11 +51,22 @@ class MaintainController extends Controller
                  'message'=>$validator->messages(),
               ]); 
          }else{
+            $two_factor_otp="No";
           $status=1;
           $username=Maintain::where('phone',$request->phone)->first();
           if($username){
                    if($username->password==$request->password){
                       if($username->status==$status){
+                            if($two_factor_otp=="No"){
+                                $dudance_maintain=MaintainJWTToken::CreateToken($username->maintain_username,$username->email,
+                                $username->id,$username->role, $username->university_assign);
+                                Cookie::queue('dudance_maintain',$dudance_maintain, 60 * 96);
+                                return response()->json([
+                                    'status'=>200,
+                                    'message'=> 'success',
+                                    'two_factor_otp'=> 'No',
+                                ]);
+                            }
                             $rand=rand(11111,99999);
                             DB::update("update maintains set login_code ='$rand' where phone = '$username->phone'");
                             SendEmail($username->email,"Maintain Otp code","One Time OTP Code",$rand,"ANCOVA");  
@@ -63,6 +74,7 @@ class MaintainController extends Controller
                                  'status'=>200,
                                  'phone'=>$username->phone,
                                  'email'=>$username->email,
+                                 'two_factor_otp'=> 'Yes',
                              ]);               
                        }else{
                           return response()->json([
@@ -125,7 +137,7 @@ class MaintainController extends Controller
 
 
        public function logout(){
-             Cookie::queue('token_maintain','',-1);
+             Cookie::queue('dudance_maintain','',-1);
              return redirect('maintain/login');
        }
 

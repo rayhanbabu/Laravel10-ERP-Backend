@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
 
       <div class="col-xl-3 col-sm-6 col-12 p-2">
         <div class="card shadow">
@@ -185,7 +185,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
 
 

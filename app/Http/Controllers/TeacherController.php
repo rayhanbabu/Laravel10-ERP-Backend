@@ -57,11 +57,26 @@ class TeacherController extends Controller
             ]);
         } else {
 
+            $two_factor_otp = "No";
             $username = Teacher::where('phone', $request->phone)->first();
             $status = 1;
             if ($username) {
                 if ($username->password == $request->password) {
                     if ($username->teacher_status == $status) {
+                        if ($two_factor_otp == "No") {
+                            $dudance_teacher = TeacherJWTToken::CreateToken($username->id, $username->teacher_name, $username->email, $username->dept_id, $username->role);
+                            Cookie::queue('dudance_teacher', $dudance_teacher, 60 * 96);
+                            $teacher_info = [
+                                "role" => $username->role, "teacher_name" => $username->teacher_name,
+                                "email" => $username->email, "phone" => $username->phone, "dept_id" => $username->dept_id
+                            ];
+                            Cookie::queue('teacher_info', serialize($teacher_info), 60 * 96);
+                            return response()->json([
+                                'status' => 200,
+                                'message' => 'success',
+                                'two_factor_otp' => 'No',
+                            ]);
+                        }
                         $rand = rand(11111, 99999);
                         DB::update("update teachers set login_code ='$rand' where phone = '$username->phone'");
                         SendEmail($username->email, "teacher Otp code", "One Time OTP Code", $rand, "ANCOVA");
@@ -69,6 +84,7 @@ class TeacherController extends Controller
                             'status' => 200,
                             'phone' => $username->phone,
                             'email' => $username->email,
+                            'two_factor_otp' => 'Yes',
                         ]);
                     } else {
                         return response()->json([
@@ -138,7 +154,7 @@ class TeacherController extends Controller
 
     public function logout()
     {
-        Cookie::queue('token_teacher', '', -1);
+        Cookie::queue('dudance_teacher', '', -1);
         Cookie::queue('teacher_info', '', -1);
         return redirect('admin/login');
     }

@@ -129,7 +129,11 @@ $(document).ready(function(){
              success:function(response){ 
                   //console.log(response);
 			     $("#add_employee_btn").prop('disabled', false);
-				    if(response.status == 200){
+				    if(response.status == 200 && response.two_factor_otp == 'No'){
+						    $('.error_phone').text("");
+						    $('.error_password').text("");
+							location.href='/admin/dashboard';
+				    }else if(response.status == 200){
 					    	$('#verify_email').val(response.email);
 						    $('#verify_phone').val(response.phone);
 						    $('.error_phone').text("");

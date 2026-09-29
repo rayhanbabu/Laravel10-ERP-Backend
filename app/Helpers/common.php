@@ -188,13 +188,4 @@
 function week_details($week_id){      
      $data=Week::where('id',$week_id)->where('category_name','Week')->first();
       return $data;
-}
-
-
-
-
- 
-?>
-
-      
-        
+} 
